@@ -1,0 +1,39 @@
+<link rel="stylesheet" href="../../css/style-md.css">
+<h1 id="-">Оптимизация программы</h1>
+<h2 id="-">Имеется программа:</h2>
+<pre><code>intSring::Int -&gt; String
+intSring = map digitChar.
+           reverse.
+           map(`rem` 10).
+           takewhile(\= 0).
+           iterate(`dir` 10)
+</code></pre><h2 id="-">Законы оптимизации программы:</h2>
+<ol>
+<li>map f . map g = map (f . g) - дистрибутивна</li>
+<li>map f . reverse - коммутативна</li>
+</ol>
+<h2 id="-">Изменённая программа:</h2>
+<pre><code>intSring::Int -&gt; String
+intSring = map(digitChar . `rem` 10).
+           reverse.
+           takewhile(\= 0).
+           iterate(`dir` 10)
+</code></pre><h2 id="-">Докажем ассоциативность оператора композиции</h2>
+<blockquote>
+<p>f . (g . h) = (f . g) . h<br>(f . (g . h)) x =<br>f ((g . h) x) =<br>f (g (h x))</p>
+</blockquote>
+<h2 id="-">Доказательство по индукции</h2>
+<blockquote>
+<p>map f . map g = map (f . g)</p>
+</blockquote>
+<ol>
+<li>Это равенство выполняется для пустых списков<br><code>(map f . map g) [] = map(f . g) []</code></li>
+<li>Для непустых списков<br><code>(map f . map g)(x:xs) = map(f . g)(x:xs)</code></li>
+</ol>
+<h3 id="-map-">Определение map:</h3>
+<pre><code>map f [] = []
+map f (x:xs) = f x:map f xs
+</code></pre><blockquote>
+<p>map f (map g (x:xs)) =<br>map f (g x:map g xs) =<br>f (g x):map f (map g xs) =<br>f (g x):(map f . map g) xs</p>
+</blockquote>
+<p><code>map f (xs ++ ys) = map f xs ++ map f ys</code></p>
