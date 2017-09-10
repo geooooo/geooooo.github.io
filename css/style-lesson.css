@@ -48,6 +48,7 @@
 
 .lesson-goto-lectures a,
 .lesson-goto-labs a {
+    display: block;
     color: white;
     text-decoration: none;
 }
